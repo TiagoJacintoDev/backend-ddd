@@ -3,7 +3,7 @@ import { ValidationError } from '@/src/shared/domain/errors/ValidationError';
 import { ValueObject } from '@/src/shared/domain/ValueObject';
 import { type SetOptional } from 'type-fest';
 
-import { type HashingService } from '../application/services/hashing.service';
+import { type Hasher } from '../application/services/hasher';
 
 export type UserPasswordProps = {
   value: string;
@@ -17,18 +17,18 @@ export class UserPassword extends ValueObject<UserPasswordProps> {
     return this.props.value;
   }
 
-  public async compare(plainTextPassword: string, h: HashingService): Promise<boolean> {
+  public async compare(plainTextPassword: string, hasher: Hasher): Promise<boolean> {
     if (this.isAlreadyHashed()) {
       const hashed = this.props.value;
 
-      return h.compare(plainTextPassword, hashed);
+      return hasher.compare(plainTextPassword, hashed);
     }
 
     return this.props.value === plainTextPassword;
   }
 
-  public async getHashedValue(h: HashingService): Promise<string> {
-    return this.isAlreadyHashed() ? this.props.value : await h.hash(this.props.value);
+  public async getHashedValue(hasher: Hasher): Promise<string> {
+    return this.isAlreadyHashed() ? this.props.value : await hasher.hash(this.props.value);
   }
 
   public isAlreadyHashed(): boolean {

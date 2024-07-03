@@ -1,14 +1,14 @@
 import { PersistenceMapper } from '@/src/shared/core/PersistenceMapper';
 import { UniqueEntityID } from '@/src/shared/domain/UniqueEntityID';
 
-import { type HashingService } from '../application/services/hashing.service';
+import { type Hasher } from '../application/services/hasher';
 import { UserEmail } from '../domain/user-email.value';
 import { UserPassword } from '../domain/user-password.value';
 import { User } from '../domain/user.entity';
 import { type UserModel } from '../infra/database/user.model';
 
 export class UserPersistenceMapper extends PersistenceMapper<User, UserModel> {
-  constructor(private readonly hashingService: HashingService) {
+  constructor(private readonly hasher: Hasher) {
     super();
   }
 
@@ -27,7 +27,7 @@ export class UserPersistenceMapper extends PersistenceMapper<User, UserModel> {
   }
 
   async toPersistence(user: User): Promise<UserModel> {
-    const hashedPassword = await user.password.getHashedValue(this.hashingService);
+    const hashedPassword = await user.password.getHashedValue(this.hasher);
 
     return {
       id: user.id.toString(),

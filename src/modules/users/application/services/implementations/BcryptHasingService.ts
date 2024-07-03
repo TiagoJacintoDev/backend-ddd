@@ -1,8 +1,8 @@
 import * as bcrypt from 'bcrypt';
 
-import { type HashingService } from '../hashing.service';
+import { type Hasher } from '../hasher';
 
-export class BcryptHashingService implements HashingService {
+export class BcryptHasher implements Hasher {
   hash(value: string): Promise<string> {
     const saltRounds = 10;
     return bcrypt.hash(value, saltRounds);
