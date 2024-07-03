@@ -2,15 +2,12 @@ import { type PrismaClient } from '@prisma/client';
 
 import { type UserEmail } from '../../../domain/user-email.value';
 import { type User } from '../../../domain/user.entity';
-import { type UserPersistenceMapper } from '../../../mappers/user.persistence-mapper';
+import { type UserMapper } from '../../../mappers/user.mapper';
 import { type UserRepository } from '../user.repository';
 import { AsyncMaybe } from '@/src/shared/core/Maybe';
 
 export class PrismaUserRepository implements UserRepository {
-  constructor(
-    private readonly prisma: PrismaClient,
-    private readonly mapper: UserPersistenceMapper
-  ) {}
+  constructor(private readonly prisma: PrismaClient, private readonly mapper: UserMapper) {}
 
   async create(user: User): Promise<void> {
     console.log('PrismaUserRepository.create');

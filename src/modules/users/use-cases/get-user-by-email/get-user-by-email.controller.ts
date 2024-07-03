@@ -4,12 +4,12 @@ import { z } from 'zod';
 
 import { UserNotFoundError } from './get-user-by-email.errors';
 import { type GetUserByEmailUseCase } from './get-user-by-email.use-case';
-import { UserPresentationMapper } from '../../mappers/user.presentation-mapper';
+import { UserPresenter } from '../../mappers/user.presenter';
 
 export class GetUserByEmailController extends BaseController {
   constructor(
     private readonly useCase: GetUserByEmailUseCase,
-    private readonly presenter: UserPresentationMapper
+    private readonly presenter: UserPresenter
   ) {
     super();
   }

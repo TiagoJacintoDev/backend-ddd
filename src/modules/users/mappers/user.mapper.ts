@@ -1,4 +1,4 @@
-import { PersistenceMapper } from '@/src/shared/core/PersistenceMapper';
+import { Mapper } from '@/src/shared/core/Mapper';
 import { UniqueEntityID } from '@/src/shared/domain/UniqueEntityID';
 
 import { type Hasher } from '../application/services/hasher';
@@ -7,7 +7,7 @@ import { UserPassword } from '../domain/user-password.value';
 import { User } from '../domain/user.entity';
 import { type UserModel } from '../infra/database/user.model';
 
-export class UserPersistenceMapper extends PersistenceMapper<User, UserModel> {
+export class UserMapper extends Mapper<User, UserModel> {
   constructor(private readonly hasher: Hasher) {
     super();
   }
