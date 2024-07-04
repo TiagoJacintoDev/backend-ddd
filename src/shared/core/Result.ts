@@ -3,15 +3,8 @@ import { type Nothing } from '@energy/shared/src/core/Nothing';
 export type Result<T, E> = Ok<T, E> | Err<T, E>;
 
 export class Ok<T, E> {
-  private readonly _value: T;
-
-  constructor(value: T) {
-    this._value = value;
+  constructor(public readonly value: T) {
     Object.freeze(this);
-  }
-
-  get value() {
-    return this._value;
   }
 
   isOk(): this is Ok<T, E> {
@@ -23,7 +16,7 @@ export class Ok<T, E> {
   }
 
   unwrapValue(): T {
-    return this._value;
+    return this.value;
   }
 
   unwrapError(): never {
@@ -32,15 +25,8 @@ export class Ok<T, E> {
 }
 
 export class Err<T, E> {
-  private readonly _error: E;
-
-  constructor(error: E) {
-    this._error = error;
+  constructor(public readonly error: E) {
     Object.freeze(this);
-  }
-
-  get error() {
-    return this._error;
   }
 
   isOk(): this is Ok<T, E> {
@@ -56,7 +42,7 @@ export class Err<T, E> {
   }
 
   unwrapError(): E {
-    return this._error;
+    return this.error;
   }
 }
 
